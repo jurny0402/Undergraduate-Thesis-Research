@@ -1,0 +1,37 @@
+library(Seurat)
+library(patchwork)
+library(cowplot)
+library(data.table)
+library(SeuratWrappers)
+library(SeuratData)
+library(harmony)
+library(dplyr)
+library(SingleR)
+
+#cluster 57개
+FTC_GEX1 <- readRDS('/home/jurny0402/FTC/code/saved_codes/reclustering/230502_FTC_GEX_reclustered_res1.0.rds')
+DimPlot(FTC_GEX1, label = T)
+DimPlot(FTC_GEX1, label = T, group.by = "tissue_type")
+
+clust1 <- readRDS('/home/jurny0402/FTC/code/saved_codes/WhichCells/230502_FTC_GEX1_WhichCells=Endo.rds')
+clust2 <- readRDS('/home/jurny0402/FTC/code/saved_codes/WhichCells/230502_FTC_GEX1_WhichCells=Fol.rds')
+clust3 <- readRDS('/home/jurny0402/FTC/code/saved_codes/WhichCells/230502_FTC_GEX1_WhichCells=Fib.rds')
+clust4 <- readRDS('/home/jurny0402/FTC/code/saved_codes/WhichCells/230502_FTC_GEX1_WhichCells=T.rds')
+clust5 <- readRDS('/home/jurny0402/FTC/code/saved_codes/WhichCells/230502_FTC_GEX1_WhichCells=B.rds')
+clust6 <- readRDS('/home/jurny0402/FTC/code/saved_codes/WhichCells/230502_FTC_GEX1_WhichCells=Macro.rds')
+clust7 <- readRDS('/home/jurny0402/FTC/code/saved_codes/WhichCells/230502_FTC_GEX1_WhichCells=Plasma B.rds')
+clust8 <- readRDS('/home/jurny0402/FTC/code/saved_codes/WhichCells/230502_FTC_GEX1_WhichCells=sMuscle.rds')
+clust9 <- readRDS('/home/jurny0402/FTC/code/saved_codes/WhichCells/230502_FTC_GEX1_WhichCells=Neutro.rds')
+clust10 <- readRDS('/home/jurny0402/FTC/code/saved_codes/WhichCells/230502_FTC_GEX1_WhichCells=NK.rds')
+clust11 <- readRDS('/home/jurny0402/FTC/code/saved_codes/WhichCells/230502_FTC_GEX1_WhichCells=TAMs.rds')
+
+DimPlot(FTC_GEX1, label = TRUE, label.size = 4, cells.highlight = clust7, sizes.highlight = .1, split.by = "tissue_type")
+
+FTC_GEX1 <- RenameIdents(FTC_GEX1, '2' = 'Endo', '26' = 'Endo','11' = 'Endo', '19' = 'Endo','40' = 'Endo','13' = 'Endo','27' = 'Endo', '35' = 'Endo', '32' = 'Endo', '39' = 'Endo')
+FTC_GEX1 <- RenameIdents(FTC_GEX1, '14' = 'Fib','16' = 'sMuscle', '36' = 'sMuscle', '42' = 'sMuscle', '25' = 'Neutro')
+FTC_GEX1 <- RenameIdents(FTC_GEX1, '3'= 'Macro/TAMs','30'= 'Macro/TAMs', '38'= 'Macro/TAMs', '22'= 'Macro/TAMs','18'= 'NK','23'= 'NK')
+FTC_GEX1 <- RenameIdents(FTC_GEX1, '0'= 'T', '6' = 'T','7' = 'T','8' = 'T','9' = 'T','21' = 'T','5' = 'B','12' = 'B','4' = 'Plasma B','24' = 'Plasma B', '29' = 'Plasma B','47' = 'Plasma B', '48' = 'Plasma B','56' = 'Plasma B', '43' = 'Plasma B','37' = 'Plasma B', '34' = 'Plasma B','49' = 'Plasma B', '51' = 'Plasma B','31' = 'Plasma B','28' = 'Plasma B', '45' = 'Plasma B','57' = 'Plasma B','53' = 'Plasma B')
+FTC_GEX1 <- RenameIdents(FTC_GEX1, '1'= 'Fol','10'= 'Fol','15'= 'Fol','17'= 'Fol','20'= 'Fol', '33'= 'Fol', '54'= 'Fol', '46'= 'Fol', '44'= 'Fol', '50'= 'Fol', '55'= 'Fol', '52'= 'Fol', '41'= 'Fol')
+
+View(FTC_GEX@meta.data)
+View(FTC_GEX1@meta.data)
